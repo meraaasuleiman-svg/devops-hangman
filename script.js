@@ -137,13 +137,36 @@ function addWord() {
 
 
 function editWord(index) {
-    const newWord = prompt('Edit word:', wordBank[index]);
-    if (newWord) {
-        wordBank.splice(index, 1);
-        saveWordBank();
-        displayWordBank();
+    const currentWord = wordBank[index];
+    const input = prompt('Edit word:', currentWord);
+
+    if (input === null) return; // user cancelled
+
+    const newWord = input.trim().toUpperCase();
+
+    // Same validation rules as addWord (REQ-WB-03)
+    if (!newWord) {
+        alert('Word cannot be empty.');
+        return;
     }
+
+    if (!/^[A-Z]+$/.test(newWord)) {
+        alert('Word must contain only letters A–Z.');
+        return;
+    }
+
+    if (wordBank.includes(newWord) && newWord !== currentWord) {
+        alert('Duplicate words are not allowed.');
+        return;
+    }
+
+    // Replace the correct word
+    wordBank[index] = newWord;
+
+    saveWordBank();
+    displayWordBank();
 }
+
 
 function deleteWord(index) {
     if (confirm('Are you sure you want to delete this word?')) {
