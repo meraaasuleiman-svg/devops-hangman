@@ -151,17 +151,29 @@ function generateKeyboard() {
 function startGame() {
     const p1Name = document.getElementById('player1Name').value.trim();
     const p2Name = document.getElementById('player2Name').value.trim();
-    
-    gameState.player1.name = p1Name || 'Player 1';
-    gameState.player2.name = p2Name || 'Player 2';
-    
+
+    // REQ-PS-01: Player names MUST be provided and MUST be different
+    if (!p1Name || !p2Name) {
+        alert('Both player names are required.');
+        return;
+    }
+
+    if (p1Name === p2Name) {
+        alert('Player names must be different.');
+        return;
+    }
+
+    gameState.player1.name = p1Name;
+    gameState.player2.name = p2Name;
+
     document.getElementById('player1Display').textContent = gameState.player1.name;
     document.getElementById('player2Display').textContent = gameState.player2.name;
-    
+
     document.getElementById('gameArea').style.display = 'block';
-    
+
     nextRound();
 }
+
 
 function nextRound() {
     if (wordBank.length === 0) {
