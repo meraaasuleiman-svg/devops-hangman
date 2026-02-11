@@ -169,11 +169,13 @@ function editWord(index) {
 
 
 function deleteWord(index) {
-    if (confirm('Are you sure you want to delete this word?')) {
-        saveWordBank();
-        displayWordBank();
-    }
+    if (!confirm('Are you sure you want to delete this word?')) return;
+
+    wordBank.splice(index, 1); // remove correct word
+    saveWordBank();
+    displayWordBank();
 }
+
 
 function generateKeyboard() {
     const keyboard = document.getElementById('keyboard');
