@@ -242,9 +242,10 @@ function updateWrongLetters() {
     if (wrong.length === 0) {
         wrongLettersDiv.textContent = 'None yet';
     } else {
-        wrongLettersDiv.textContent = gameState.guessedLetters.join(', ');
+        wrongLettersDiv.textContent = wrong.join(', ');
     }
 }
+
 
 function updateLives() {
     const livesLeft = Math.max(0, gameState.maxWrong - gameState.wrongGuesses);
