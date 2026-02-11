@@ -22,17 +22,33 @@ let wordBank = [];
 document.addEventListener('DOMContentLoaded', function() {
     loadWordBank();
     generateKeyboard();
+    applySavedTheme(); // REQ-UI-02 persistence
 });
 
 function toggleTheme() {
+    const isDarkNow = !document.body.classList.contains('dark-mode');
+    document.body.classList.toggle('dark-mode', isDarkNow);
+    localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+
     const themeIcon = document.querySelector('.theme-icon');
-    
-    if (themeIcon.textContent === '🌙') {
-        themeIcon.textContent = '☀️';
-    } else {
-        themeIcon.textContent = '🌙';
+    if (themeIcon) {
+        // REQ-UI-02: 🌙 for light mode, ☀️ for dark mode
+        themeIcon.textContent = isDarkNow ? '☀️' : '🌙';
     }
 }
+
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const isDark = savedTheme === 'dark';
+
+    document.body.classList.toggle('dark-mode', isDark);
+
+    const themeIcon = document.querySelector('.theme-icon');
+    if (themeIcon) {
+        themeIcon.textContent = isDark ? '☀️' : '🌙';
+    }
+}
+
 
 function switchTab(tabName) {
     const tabs = document.querySelectorAll('.tab-content');
