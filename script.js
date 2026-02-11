@@ -111,11 +111,30 @@ function addWord() {
     const input = document.getElementById('newWord');
     const word = input.value.trim().toUpperCase();
 
+    // REQ-WB-02: Empty words MUST NOT be allowed
+    if (!word) {
+        alert('Word cannot be empty.');
+        return;
+    }
+
+    // REQ-WB-02: Only uppercase letters A–Z allowed
+    if (!/^[A-Z]+$/.test(word)) {
+        alert('Word must contain only letters A–Z.');
+        return;
+    }
+
+    // REQ-WB-02: Duplicate words MUST NOT be allowed
+    if (wordBank.includes(word)) {
+        alert('Duplicate words are not allowed.');
+        return;
+    }
+
     wordBank.push(word);
     input.value = '';
     saveWordBank();
     displayWordBank();
 }
+
 
 function editWord(index) {
     const newWord = prompt('Edit word:', wordBank[index]);
